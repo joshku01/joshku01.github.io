@@ -1,216 +1,175 @@
-<!DOCTYPE html>
 <html>
-<title>Categories - Josh Ku life</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Josh Ku life travel,blog,sharing - Categories </title>
+    
+    
+    <meta content="Josh Ku life travel,blog,sharing" name="keywords">
+    
+    <meta content="Josh Ku life travel,blog,sharing - A website called Josh Ku life travel,blog,sharing" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+        <link href="/categories/index.xml" rel="alternate" type="application/rss&#43;xml" title="Josh Ku life travel,blog,sharing" />
+        <link href="/categories/index.xml" rel="feed" type="application/rss&#43;xml" title="Josh Ku life travel,blog,sharing" />
+    
 
+    
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C7P3SSW1N"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+          gtag('config', 'G-1C7P3SSW1N');
+        </script>
+    
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    
 
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/self/css/default.css">
+    <script src=" /layui/layui.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" async href="/self/css/markdown.min.css">
+    <link rel="stylesheet" async href="/self/css/gallery.css">
+    
+    
+    
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+    <script async src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" integrity="sha256-PZEg+mIdptYTwWmLcBTsa99GIDZujyt7VHBZ9Lb2Jys=" crossorigin="anonymous"></script></head>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<link rel="stylesheet" href="/css/layout.css">
+<body>
+    
+    <header class="layui-header layui-bg-cyan">
 
+    
+        <a href=""><img src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" class="layui-nav-img" style="margin-left:10px;margin-top:-10px"></a>
+    
+    
+    <a class="nav-self-logo" href="/">
+        Josh Ku life travel,blog,sharing
+    </a>
 
-<script src="/js/anchor-fix.js"></script>
-
-
-<body class="w3-content" style="max-width:1200px">
-
-
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-    <div class="w3-container w3-display-container w3-padding-16">
+    <ul class="layui-nav layui-layout-right layui-bg-cyan" lay-filter="">
         
-        <i onclick="w3_close()" class="fas fa-times w3-hide-large w3-button w3-display-topright w3-text-grey"></i>
         
-        <h3 class="w3-wide w3-hide-small w3-hide-medium nav-site-title">
-            <b><a href="/">Josh Ku life</a></b>
-        </h3>
+        <li class="layui-nav-item" id="nav_big"><a href="/post/">Posts</a></li>
         
-        <div class="w3-wide nav-site-button mini-widget">
-            <form class="w3-wide search-form" action="/search/" role="search">
+
+        
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/home/">Home</a></li>
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/posts/">About</a></li>
+            
+        
+
+        
+        <li class="layui-nav-item" id="nav_small">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-app" style="font-size: 24px;"></i>
+            </a>
+
+            <dl class="layui-nav-child">
                 
-                <span class="theme-switch">
-                    <input type=checkbox id="theme-btn">
-                    <label for="theme-btn"></label>
-                    <script>
-const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    if (currentTheme === 'light') {
-        toggleSwitch.checked = true;
-    }
-}
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-    }
-    else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    }
-}
-toggleSwitch.addEventListener('change', switchTheme, false);
+                <dd><a href="/post/">Posts</a></dd>
+                
+
+                
+                    
+                        <dd><a href="/home/">Home</a></dd>
+                    
+                        <dd><a href="/posts/">About</a></dd>
+                    
+                
+            </dl>
+        </li>
+    </ul>
+</header>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+});
 </script>
 
-                </span>
-                
-                <button type=submit class="fas fa-search fa-xs"></button>
-                <input type=text autocomplete="off" placeholder="..." name="q">
-            </form>
+        <div id="content" style="min-height:80%">
+
+<main id="main">
+
+<div class="layui-fluid list-show" >
+    <div class="layui-row">
+        <div class="layui-col-md6 layui-col-sm12 layui-col-xs12">
+            <div class="list-show-title">
+                <h1>These are my blogs</h1>
+                <h2>and also my life</h2>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm12 layui-col-xs12" style="text-align:center;">
+            <img src="/self/img/undraw_chat_bot_kli5.png" class="list-title-pic">
+        </div>
+    </div>
+</div>
+
+<div class="layui-container">
+        
+
+    
+<div class="pager">
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">
+            <a href="/categories/"><i class="layui-icon">&#xe65a;</i></a>
+        </button>
+        
+        <button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">
+            <i class="layui-icon">&#xe603;</i>
+        </button>
+        
+        
+        <button type="button" class="layui-btn layui-btn-disabled layui-btn-sm">
+            <i class="layui-icon">&#xe602;</i>
+        </button>
+        
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">
+            <a href="/categories/"><i class="layui-icon">&#xe65b;</i></a>
+        </button>
+    </div>
+</div>
+
+</div>
+
+</main>
+
+
+        </div><footer>
+    
+
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md4 layui-col-sm6 layui-col-xs6">
+                <h3> Related Sites </h3>
+            </div>
+        </div>
+        <div class="layui-row">
+            
+            <div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
+                <a href="/"><p class="footer-url">home</p></a>
+            </div>
+            
         </div>
     </div>
     
-    <a href="/archives" class="nav-site-list w3-bar-item w3-button w3-padding">年份歸檔</a>
-    <a href="/archives-category"  class="nav-site-list w3-bar-item w3-button w3-padding">分類歸檔</a>
-    <a href="/archives-tag"  class="nav-site-list w3-bar-item w3-button w3-padding">標籤歸檔</a>
     
-    <div class="w3-padding-32 w3-padding" style="font-weight:bold">
-        
-
-        
-</div>
-
-        <div class="widget">
-    <div class="widget-title">分類</div>
-    
-</div>
-
-        <div class="widget">
-    <div class="widget-title">標籤</div>
-    
-</div>
-
+    <div class="layui-container">
+        <p class="copyright">&copy; All rights reserved. Powered by <a href='https://gohugo.io' style='color:#FFFFFF'>Hugo</a> and <a href='https://github.com/ertuil/erblog' style='color:#FFFFFF'>Erblog</a>.</p>
     </div>
-</nav>
-
-
-<header class="header-bar w3-hide-large w3-top">
-    <span class="w3-center w3-text-white"><h4 class="header-bar-title"><a href="/">Josh Ku life</a></h4>
-    <a href="#" class="header-bar-button w3-button w3-padding w3-right w3-text-grey" onclick="w3_open(); return false"><i class="fas fa-bars fa-lg"></i></a></span>
-</header>
-
-
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-
-<div class="w3-main" style="margin-left:270px;">
-    
-    <span id="top"></span>
-
-    
-    <div class="w3-hide-large" style="min-height: 50px"></div>
-
-    
-    <header class="w3-container" id="header-bar">
-        <p class="w3-right w3-wide w3-padding" style="font-size: 0.8rem">
-            置頂連結
-        </p>
-    </header>
-
-    
-    
-    <div class="w3-container">
-        
-      </div>
-
-    
-    <div class="w3-container w3-center w3-padding-32">
-
-
-
-
-</div>
-
-
-
-
-    
-    <footer class="w3-padding-64 w3-small w3-center" id="footer">
-    <div class="w3-row-padding">
-    <div class= "taxo-widget">
-    <div class="widget-title">關於叭子</div>
-    <div class="taxo-list">
-        <p>
-            OFF RECORD<br>
-        </p>
-    </div>
-</div>
-
-    </div>
-    </footer>
-    
-    <footer class="footer-copyright w3-center w3-small w3-padding">
-    		&copy; 2020-2022 Josh Ku life. Generated with <a href="https://github.com/offrecordrae/EarlGrey" target="_blank">Earl Grey theme</a> | <a href="https://gohugo.io/" target="_blank">HUGO</a> | <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank">W3.CSS</a>.
-    </footer>
-  
-</div>
-
-<script>
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-</script>
-
-
-<script type="text/javascript" src="/js/lightbox.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/lightbox.css"/>
-
-<script>
-    new SimpleLightbox({elements: '.imageGallery1 a'});
-</script>
-
-<a href="#top" class="gotop">
-    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-up" class="svg-inline--fa fa-chevron-circle-up fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm231-113.9L103.5 277.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L256 226.9l101.6 101.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L273 142.1c-9.4-9.4-24.6-9.4-34 0z">
-    </path>
-</svg>
-</a>
-
-<script type='text/javascript'>
-  window.onload = function() {
-    var links = document.links;
-    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
-      if (links[i].hostname != window.location.hostname) {
-        links[i].target = '_blank';
-      }
-    }
-  }
-</script>
-
-<script>
-    MathJax = {
-        tex: {
-            inlineMath: [["$", "$"]],
-        },
-        displayMath: [
-            ["$$", "$$"],
-            ["\[\[", "\]\]"],
-        ],
-        svg: {
-            fontCache: "global",
-        },
-    };
-</script>
-<script src="https://polyfill.io/v3/polyfill.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-
+</footer>
 
 </body>
 </html>
