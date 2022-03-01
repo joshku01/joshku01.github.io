@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Josh Ku life travel,blog,sharing</title>
-    <link>https://josh-ku.com/</link>
-    <description>Recent content on Josh Ku life travel,blog,sharing</description>
+    <title>Codes on Josh Ku life travel,blog,sharing</title>
+    <link>https://josh-ku.com/code/</link>
+    <description>Recent content in Codes on Josh Ku life travel,blog,sharing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>JoshKu</copyright>
-    <lastBuildDate>Wed, 23 Feb 2022 15:15:38 +0800</lastBuildDate><atom:link href="https://josh-ku.com/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Example</title>
-      <link>https://josh-ku.com/zone/example/</link>
-      <pubDate>Wed, 23 Feb 2022 15:15:38 +0800</pubDate>
-      
-      <guid>https://josh-ku.com/zone/example/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Mon, 21 Feb 2022 15:19:22 +0800</lastBuildDate><atom:link href="https://josh-ku.com/code/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux 調整shell 方式</title>
       <link>https://josh-ku.com/code/nginx-location/</link>
@@ -24,15 +15,6 @@
       
       <guid>https://josh-ku.com/code/nginx-location/</guid>
       <description>nginx lccation設定筆記 tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { .</description>
-    </item>
-    
-    <item>
-      <title>Linux 調整shell 方式</title>
-      <link>https://josh-ku.com/post/linux-shell/</link>
-      <pubDate>Mon, 21 Feb 2022 15:19:22 +0800</pubDate>
-      
-      <guid>https://josh-ku.com/post/linux-shell/</guid>
-      <description>tags: linux linux 筆記-調整sh方式 查看系統/bin/sh 目前shell  要查看/bin/sh 目前連結到哪個Shell，可以使用以下指令: $ ls -l /bin/sh 想要切換到bash可以使用: sudo dpkg-reconfigure dash 會看到以下畫面:  選擇Yes 則/bin/sh 會連結到dash; 選擇No 則/bin/sh 會連結到bash。  </description>
     </item>
     
   </channel>

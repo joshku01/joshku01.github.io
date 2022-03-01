@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on Josh Ku life travel,blog,sharing</title>
+    <link>https://josh-ku.com/series/linux/</link>
+    <description>Recent content in linux on Josh Ku life travel,blog,sharing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>JoshKu</copyright>
+    <lastBuildDate>Mon, 21 Feb 2022 15:19:22 +0800</lastBuildDate><atom:link href="https://josh-ku.com/series/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 調整shell 方式</title>
+      <link>https://josh-ku.com/post/linux-shell/</link>
+      <pubDate>Mon, 21 Feb 2022 15:19:22 +0800</pubDate>
+      
+      <guid>https://josh-ku.com/post/linux-shell/</guid>
+      <description>tags: linux linux 筆記-調整sh方式 查看系統/bin/sh 目前shell  要查看/bin/sh 目前連結到哪個Shell，可以使用以下指令: $ ls -l /bin/sh 想要切換到bash可以使用: sudo dpkg-reconfigure dash 會看到以下畫面:  選擇Yes 則/bin/sh 會連結到dash; 選擇No 則/bin/sh 會連結到bash。  </description>
+    </item>
+    
+  </channel>
+</rss>
