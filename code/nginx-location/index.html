@@ -3,12 +3,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Josh Ku life travel,blog,sharing - Linux 調整shell 方式 </title>
+    <title>Josh Ku life travel,blog,sharing - nginx lccation設定 </title>
     
     
     <meta content="Josh Ku life travel,blog,sharing" name="keywords">
     
-    <meta content="Josh Ku life travel,blog,sharing - nginx lccation設定筆記 tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { ." name="description">
+    <meta content="Josh Ku life travel,blog,sharing - tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { ." name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
@@ -124,7 +124,7 @@ layui.use('element', function(){
             <div class="layui-card single-card">
                 <br />
                 <blockquote class="self-elem-quote  markdown-body single-title" >
-                    <h1>Linux 調整shell 方式</h1>
+                    <h1>nginx lccation設定</h1>
                     <h3 style="margin-top:10px; margin-bottom:10px"> 
     <i class="layui-icon layui-icon-date" style="font-size: 28px; vertical-align: -2px;"></i>
     <span>2022-02-21</span>
@@ -142,8 +142,7 @@ layui.use('element', function(){
 
                 </blockquote>
                 <div class="layui-card-body markdown-body single-content">
-                    <h1 id="nginx-lccation設定筆記">nginx lccation設定筆記</h1>
-<h6 id="tags-web">tags: <code>web</code></h6>
+                    <h6 id="tags-web">tags: <code>web</code></h6>
 <h2 id="nginx-設定-location匹配選擇機制">Nginx 設定 location匹配選擇機制</h2>
 <h3 id="以下列配置為基準">以下列配置為基準:</h3>
 <ul>
@@ -348,7 +347,7 @@ layui.use('element', function(){
     
     
     <div class="layui-container">
-        <p class="copyright">Copyright &copy;2021-2022 Powered by <a href='https://gohugo.io' style='color:#FFFFFF'>Hugo</a> and <a href='https://github.com/joshku01/' style='color:#FFFFFF'>JoshKu</a>.</p>
+        <p class="copyright">&copy; All rights reserved. Powered by <a href='https://gohugo.io' style='color:#FFFFFF'>Hugo</a> and <a href='https://github.com/ertuil/erblog' style='color:#FFFFFF'>Erblog</a>.</p>
     </div>
 </footer>
 

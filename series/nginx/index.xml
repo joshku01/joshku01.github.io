@@ -9,12 +9,12 @@
     <copyright>JoshKu</copyright>
     <lastBuildDate>Mon, 21 Feb 2022 15:19:22 +0800</lastBuildDate><atom:link href="https://josh-ku.com/series/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Linux 調整shell 方式</title>
+      <title>nginx lccation設定</title>
       <link>https://josh-ku.com/code/nginx-location/</link>
       <pubDate>Mon, 21 Feb 2022 15:19:22 +0800</pubDate>
       
       <guid>https://josh-ku.com/code/nginx-location/</guid>
-      <description>nginx lccation設定筆記 tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { .</description>
+      <description>tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { .</description>
     </item>
     
   </channel>

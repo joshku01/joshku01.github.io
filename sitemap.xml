@@ -2,12 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://josh-ku.com/zone/example/</loc>
-    <lastmod>2022-02-23T15:15:38+08:00</lastmod>
+    <loc>https://josh-ku.com/travel/home-page/</loc>
+    <lastmod>2022-02-23T16:49:43+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://josh-ku.com/</loc>
+    <lastmod>2022-02-23T16:49:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://josh-ku.com/travel/</loc>
+    <lastmod>2022-02-23T16:49:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://josh-ku.com/zone/example/</loc>
     <lastmod>2022-02-23T15:15:38+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -27,17 +37,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://josh-ku.com/code/nginx-location/</loc>
-    <lastmod>2022-02-21T15:19:22+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://josh-ku.com/post/linux-shell/</loc>
     <lastmod>2022-02-21T15:19:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://josh-ku.com/series/nginx/</loc>
+    <lastmod>2022-02-21T15:19:22+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://josh-ku.com/code/nginx-location/</loc>
     <lastmod>2022-02-21T15:19:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
