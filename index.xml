@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>JoshKu</copyright>
-    <lastBuildDate>Wed, 23 Feb 2022 15:15:38 +0800</lastBuildDate><atom:link href="https://josh-ku.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Jul 2022 12:09:22 +0800</lastBuildDate><atom:link href="https://josh-ku.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spotify 黑屏打不開解決方法(MacOS)</title>
+      <link>https://josh-ku.com/post/spotify-solve/</link>
+      <pubDate>Fri, 08 Jul 2022 12:09:22 +0800</pubDate>
+      
+      <guid>https://josh-ku.com/post/spotify-solve/</guid>
+      <description>tags: spotify 各位是不是常常有在使用spotify電腦版時有遇到這個困擾呢？遇到黑屏,黑畫面,打不開 的囧境呢？這種情況通常發生在當你將 Spotify 電腦版登出再登入的時候。 沒關係小編今天就來教你快速解決 Spotify 電腦版(mac)打不開的問題~ 方法-打開隱藏資料夾prefs 1.首先打開一個Finder資料夾(隨便一個都可以),你會看到上方有個前往選項,就是[Libraray]資料夾,點擊進入 2.進入資源庫之後,點擊[Application Support]這個資料夾 3.找到Spotify資料夾後,點擊進入 4.接著就會看到prefs這隻檔案,打開編輯他,加入 language=”zh-TW” 這個指令，上方如果有多餘的設定檔案也刪除掉,儲存後離開 基本上重新再打開spotify就可順利開啟了!!  &amp;ndash;資料夾完整路徑&amp;ndash;/Users/Users/Library/ApplicationSupport/Spotify/prefs
+ 也可以直接進入cmd鍵入上方路徑直接做更改哦~ 至於Spotify電腦版打不開的原因是? 爬文查資料可能是spotify電腦版語系上的Bug,至於過了這麼久還是存在這個Bug,小編試了許多網路上修改語系的方式也無法解決,這個方式最直接最暴力,目前也只能等待spotify官方將這個Bug做修復了。 如果你也遇到Spotify電腦版打不開、黑屏、黑畫面的問題,可以試看看上述的步驟來解決。 </description>
+    </item>
+    
     <item>
       <title>Example</title>
       <link>https://josh-ku.com/zone/example/</link>
