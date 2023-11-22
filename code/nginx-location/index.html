@@ -1,0 +1,355 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Josh Ku life travel,blog,sharing - nginx lccation設定 </title>
+    
+    
+    <meta content="Josh Ku life travel,blog,sharing" name="keywords">
+    
+    <meta content="Josh Ku life travel,blog,sharing - tags: web Nginx 設定 location匹配選擇機制 以下列配置為基準:  一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔  server { ... server_name www.domain.com ... # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後 # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 location / { .... } # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目 location /rotate { .... } # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋 location /rotate/taiwan { .... } # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境 # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋 # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋 location /rotate/taiwan/keelung { ." name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+
+    
+
+    
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1C7P3SSW1N"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+          gtag('config', 'G-1C7P3SSW1N');
+        </script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true
+            },
+            "HTML-CSS": { availableFonts: ["TeX"] }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+    
+
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/self/css/default.css">
+    <script src=" /layui/layui.js"></script>
+
+    <link rel="stylesheet" async href="/self/css/markdown.min.css">
+    <link rel="stylesheet" async href="/self/css/gallery.css">
+    
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+    <script async src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" integrity="sha256-PZEg+mIdptYTwWmLcBTsa99GIDZujyt7VHBZ9Lb2Jys=" crossorigin="anonymous"></script></head>
+
+<body>
+    
+    <header class="layui-header layui-bg-cyan">
+
+    
+        <a href=""><img src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" class="layui-nav-img" style="margin-left:10px;margin-top:-10px"></a>
+    
+    
+    <a class="nav-self-logo" href="/">
+        Josh Ku life travel,blog,sharing
+    </a>
+
+    <ul class="layui-nav layui-layout-right layui-bg-cyan" lay-filter="">
+        
+        
+        <li class="layui-nav-item" id="nav_big"><a href="/post/">Posts</a></li>
+        
+
+        
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/code/">程式</a></li>
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/post/">文章</a></li>
+            
+                <li class="layui-nav-item" id="nav_big"><a href="/travel/">旅遊</a></li>
+            
+        
+
+        
+        <li class="layui-nav-item" id="nav_small">
+            <a href="javascript:;">
+                <i class="layui-icon layui-icon-app" style="font-size: 24px;"></i>
+            </a>
+
+            <dl class="layui-nav-child">
+                
+                <dd><a href="/post/">Posts</a></dd>
+                
+
+                
+                    
+                        <dd><a href="/code/">程式</a></dd>
+                    
+                        <dd><a href="/post/">文章</a></dd>
+                    
+                        <dd><a href="/travel/">旅遊</a></dd>
+                    
+                
+            </dl>
+        </li>
+    </ul>
+</header>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+
+        <div id="content" style="min-height:80%">
+<div class="layui-container" style="margin-bottom: 10px">
+    
+
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md8 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card single-card">
+                <br />
+                <blockquote class="self-elem-quote  markdown-body single-title" >
+                    <h1>nginx lccation設定</h1>
+                    <h3 style="margin-top:10px; margin-bottom:10px"> 
+    <i class="layui-icon layui-icon-date" style="font-size: 28px; vertical-align: -2px;"></i>
+    <span>2022-02-21</span>
+
+    
+    
+
+    
+
+    
+
+    
+    
+</h3>
+
+                </blockquote>
+                <div class="layui-card-body markdown-body single-content">
+                    <h6 id="tags-web">tags: <code>web</code></h6>
+<h2 id="nginx-設定-location匹配選擇機制">Nginx 設定 location匹配選擇機制</h2>
+<h3 id="以下列配置為基準">以下列配置為基準:</h3>
+<ul>
+<li>一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔</li>
+</ul>
+<pre tabindex="0"><code>server {
+    ...
+    server_name  www.domain.com 
+    ...
+
+    # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後
+    # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 
+    location / {
+        ....
+    }
+
+    # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /rotate {
+        ....
+    }
+
+    # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋
+    location /rotate/taiwan {
+        ....
+    }
+
+    # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境
+    # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋
+    # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋
+    location /rotate/taiwan/keelung {
+        ....
+    }
+}
+</code></pre><ul>
+<li>使用<code>=</code>代表精準匹配,需要<code>完全符合</code>且匹配到會<code>立即採用</code></li>
+</ul>
+<pre tabindex="0"><code>server {
+    ... other ...
+
+    server_name  www.domain.com 
+
+    ... other ...
+
+    # 只能 http://www.domain.com 才能符合，後面不能帶任何字元，e.g. http://www.domain.com (O), http://www.domain.com/abc (X)
+    location = / {
+        ....
+    }
+
+    # 來自 http://www.domain.com/news/taiwan/taipei 的要求會立即採用此配置
+    location = /news/taiwan/taipei {
+        ....
+    } 
+}
+</code></pre><ul>
+<li>使用<code>~</code>代表使用<code>正規表達式</code>來匹配,會區分大小寫</li>
+</ul>
+<ol>
+<li>若不區分大小寫使用<code>~*</code></li>
+<li>第一個匹配到的規則會<code>立即採用</code></li>
+<li><code>順序</code>很重要</li>
+</ol>
+<pre tabindex="0"><code>server {
+    ... other ...
+
+    server_name  www.domain.com 
+
+    ... other ...
+
+    # 1. 來自 http://www.domain.com/images 開頭的要求會匹配此規則且立即採用該配置，但 http://www.domain.com/Images 開頭的要求則不符合該規則
+    location ~ ^/images {
+        ....
+    }
+
+    # 來自 http://www.domain.com/images 和 http://www.domain.com/Images 開頭的要求皆能符合此規則且會立即採用該配置
+    location ~* ^/images {
+        ....
+    }
+
+    # 匹配所有以 .gif 和 .jpg 和 .jpeg 結尾的要求，這邊分兩個情境來說明
+    # 1. 來自 http://www.domain.com/Images/dog.jpg 的請求雖然符合該配置的規則，但是卻會先被上面的 ~* ^/images 這條規則先攔截，因此該請求其實是到不了這條規則的
+    # 2. 來自 http://www.domain.com/news/images/cat.gif 的請求符合該配置的規則且沒在其它地方被攔截，所以會立即採用該配置
+    location ~* \.(gif|jpg|jpeg)$ {
+        ....
+    }
+
+    # 匹配所有 URI 路徑以 admin 和 swagger 和 api 開頭的要求，這邊分兩個情境來說明
+    # 例如來自 http://www.domain.com/admin/... 或 http://www.domain.com/Admin/... 開頭的請求皆符合此規則且會立即採用該配置
+    location ~* ^/(admin|swagger|api)/? {
+        ....
+    }  
+}
+</code></pre><ul>
+<li>使用 <code>^~</code>代表排除<code>正規表達式</code>的匹配,類似一般配置,<code>不同</code>的式一旦符合即<code>馬上採用該配置</code></li>
+</ul>
+<pre tabindex="0"><code>server {
+    ...
+    server_name  www.domain.com 
+
+
+    # 匹配到所有請求，但還不會馬上採用，會繼續往下搜尋是否有其它較長符合路徑的項目
+    location / {
+        ....
+    }
+
+    # 匹配到以 /news 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /news {
+        ....
+    }
+
+    # 匹配到以 /news/taiwan 開頭的所有請求，因為使用了 ^~ 所以如果有符合 /news/taiwan 開頭的 URI 會立即採用該配置，停止往下搜尋
+    # 1. 來自 http://www.domain.com/news/taiwan/taichung/index 的請求符合該配置的規則，所以採用該配置
+    # 2. 來自 http://www.domain.com/news/china/xingchang/index 的請求不符合該配置的規則，繼續往下搜尋
+    location ^~ /news/taiwan {
+        ....
+    }
+
+    # 匹配到以 /news/china 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /news/china {
+        ....
+    }
+}
+</code></pre><table>
+<thead>
+<tr>
+<th>參數</th>
+<th>說明</th>
+<th>是否立即採用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>最長路徑</td>
+<td>No</td>
+</tr>
+<tr>
+<td>=</td>
+<td>精準匹配</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>^~</td>
+<td>效果似最長路徑(略過正規表達式),但會馬上採取</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>~</td>
+<td>正規表達式,區分大小寫</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>~*</td>
+<td>正規表達式,不區分大小寫</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4 layui-col-sm12 layui-col-xs12">
+            
+
+            <div class="layui-card single-card">
+                <h2 class="single-title">Recent Posts</h2>
+            
+                
+                <div style="margin-left: 10px;">
+                    <blockquote class="self-elem-quote " style="background-color:#FFFFFF;margin-top: 10px;">
+                    <a href="/post/linux-shell/">
+                        <h3 class="">Linux 調整shell 方式</h3>
+                    </a>
+                    <h3 style="margin-top:10px; margin-bottom:10px"> 
+    <i class="layui-icon layui-icon-date" style="font-size: 28px; vertical-align: -2px;"></i>
+    <span>2022-02-21</span>
+
+    
+    
+
+    
+
+    
+
+    
+    
+</h3>
+
+                    </blockquote>
+                </div>
+                
+            
+            <br />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+        </div><footer>
+    
+    
+    <div class="layui-container">
+        <p class="copyright">&copy; All rights reserved. Powered by <a href='https://gohugo.io' style='color:#FFFFFF'>Hugo</a> and <a href='https://github.com/ertuil/erblog' style='color:#FFFFFF'>Erblog</a>.</p>
+    </div>
+</footer>
+
+</body>
+</html>
