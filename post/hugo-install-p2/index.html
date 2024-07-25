@@ -1,0 +1,467 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<script type=application/ld+json>{"@context":"http://schema.org","@type":"Website","@id":"https:\/\/josh-ku.com\/","author":{"@type":"Person","name":"Josh Ku","image":"https://i.imgur.com/920bDlI.jpeg"},"name":"Josh Ku life blog \u0026\u0026 sharing happiness","description":"","url":"https:\/\/josh-ku.com\/post\/hugo-install-p2\/","keywords":"[tech, golang, hugo]"}</script>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=generator content="Hugo 0.92.2 with theme Tranquilpeak 0.5.3-BETA">
+<meta name=author content="Josh Ku">
+<meta name=keywords content="tech,golang,hugo">
+<meta name=description content>
+<meta property="og:description" content>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hugo搭配Github Actions實現自動化部屬(二)">
+<meta name=twitter:title content="Hugo搭配Github Actions實現自動化部屬(二)">
+<meta property="og:url" content="https://josh-ku.com/post/hugo-install-p2/">
+<meta property="twitter:url" content="https://josh-ku.com/post/hugo-install-p2/">
+<meta property="og:site_name" content="Josh Ku life blog && sharing happiness">
+<meta property="og:description" content>
+<meta name=twitter:description content>
+<meta property="og:locale" content="zh-tw">
+<meta property="article:published_time" content="2023-11-22T15:53:03">
+<meta property="article:modified_time" content="2023-11-22T15:53:03">
+<meta property="article:section" content="golang">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="hugo">
+<meta name=twitter:card content="summary">
+<meta property="og:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="twitter:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="og:image" content="https://i.imgur.com/nXIR6RL.png">
+<meta property="twitter:image" content="https://i.imgur.com/nXIR6RL.png">
+<title>Hugo搭配Github Actions實現自動化部屬(二)</title>
+<link rel=icon href=https://josh-ku.com/favicon.png>
+<link rel=canonical href=https://josh-ku.com/post/hugo-install-p2/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://josh-ku.com/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1C7P3SSW1N"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-1C7P3SSW1N',{anonymize_ip:!1})}</script>
+</head>
+<body>
+<div id=blog>
+<header id=header data-behavior=4>
+<i id=btn-open-sidebar class="fa fa-lg fa-bars"></i>
+<div class=header-title>
+<a class=header-title-link href=https://josh-ku.com/ aria-label=去首頁>Josh Ku life blog && sharing happiness</a>
+</div>
+<a class="header-right-icon open-algolia-search" href=https://josh-ku.com/#search aria-label="打開鏈接: /#search">
+<i class="fa fa-lg fa-saarch"></i>
+</a>
+</header>
+<nav id=sidebar data-behavior=4>
+<div class=sidebar-container>
+<div class=sidebar-profile>
+<a href=https://josh-ku.com/#about aria-label=閱讀有關作者的更多信息>
+<img class=sidebar-profile-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+</a>
+<h4 class=sidebar-profile-name>Josh Ku</h4>
+<h5 class=sidebar-profile-bio>Software Engineer.Work Out.lifestyle</h5>
+</div>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title=Home>
+<i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden=true></i>
+<span class=sidebar-button-desc>首頁</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/categories title=Categories>
+<i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden=true></i>
+<span class=sidebar-button-desc>分類</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags title=Tags>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>標籤</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/archives title=Archives>
+<i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden=true></i>
+<span class=sidebar-button-desc>所有文章</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/about title=About>
+<i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden=true></i>
+<span class=sidebar-button-desc>關於</span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://github.com/joshku01 target=_blank rel=noopener title=GitHub>
+<i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden=true></i>
+<span class=sidebar-button-desc>GitHub</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/golang title=Golang>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Golang</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/docker title=Docker>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Docker</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/kubernetes title=Kubernetes>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Kubernetes</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<div id=main data-behavior=4 class=hasCoverMetaIn>
+<article class=post id=top>
+<div class="post-header main-content-wrap text-center">
+<h1 class=post-title>
+Hugo搭配Github Actions實現自動化部屬(二)
+</h1>
+<div class="postShorten-meta post-meta">
+<time datetime=2023-11-22T15:53:03+08:00>
+22 十一月 2023
+</time>
+<span>分類</span>
+<a class=category-link href=https://josh-ku.com/categories/golang>golang</a>
+</div>
+</div>
+<div class="post-content markdown">
+<div class=main-content-wrap>
+<h1 id=使用github快速部署高性能hugo靜態網站二>使用Github快速部署高性能Hugo靜態網站(二)</h1>
+<h5 id=上一篇hugo架設靜態網站教學---基本安裝及設定一httpsjosh-kucomposthugo-installhugo的基本介紹安裝及如何快速部署一個hugo靜態網頁已經成功在local環境中套用hugo-theme距離上一篇內容也經過了半年之久希望各位同學還記得上一篇的作法接下來就是紀錄如何使用github-action自動建置hugo網站並部署到github-pages實現自動化部署的目標讓我們可以專注在文章的撰寫>上一篇<a href=https://josh-ku.com/post/hugo-install/>Hugo架設靜態網站教學 - 基本安裝及設定(一)</a>Hugo的基本介紹,安裝及如何快速部署一個Hugo靜態網頁,已經成功在local環境中套用Hugo Theme,距離上一篇內容也經過了半年之久,希望各位同學還記得上一篇的作法,接下來就是紀錄如何使用Github Action自動建置Hugo網站並部署到Github Pages,實現自動化部署的目標,讓我們可以專注在文章的撰寫</h5>
+<h2 id=建立步驟>建立步驟</h2>
+<ol>
+<li>建立 GitHub repository(作為靜態網頁用)</li>
+</ol>
+<blockquote>
+<p>詳細內容請參考官方文件 <a href=https://pages.github.com/>GitHub Pages</a></p>
+</blockquote>
+<pre tabindex=0><code>1.需要為Public
+2.名稱為{username}.github.io形式
+</code></pre><p><img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/github-pages.png alt></p>
+<ol start=2>
+<li>需要另外在github準備另一個專案,這邊命名為Hugo-main(產生網頁用),開始建立第一個workflows,在專案底下建立路徑為<code>.github/workflows/main.yml</code></li>
+</ol>
+<ul>
+<li>首先為這個gitflows取個名稱,這邊就命名<code>deploy-to-github</code></li>
+</ul>
+<pre tabindex=0><code>name: deploy-to-github
+</code></pre><ul>
+<li>接下來為要觸發的時機與分之設定</li>
+</ul>
+<pre tabindex=0><code>on:
+  push:
+    branches:
+      - master  # 當main分支有push操作時
+</code></pre><ol start=3>
+<li>開始寫第一個Job</li>
+</ol>
+<ul>
+<li>接下來建立第一個 Job，我這裡將這個 Job 命名為 deploy，並再 runs-on 選項設定這個 Job 要跑在 ubuntu-20.04版本上</li>
+</ul>
+<pre tabindex=0><code>jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+</code></pre><ul>
+<li>這個步驟要把Repo checkout下來,這邊使用官方的action <code> actions/checkout@v2</code>,如Hugo是使用Submodule方式pull,記得要加入<code>submodules: true</code>,來把Theme加入</li>
+</ul>
+<pre tabindex=0><code>steps:
+  - uses: actions/checkout@v2
+    with:
+      submodules: true  # 找尋Hugo主題(true OR recursive)
+      fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+</code></pre><ul>
+<li>接下來安裝Ｈugo部分也使用官方的action</li>
+</ul>
+<pre tabindex=0><code>  - name: Setup Hugo
+    uses: peaceiris/actions-hugo@v2
+    with:
+      hugo-version: '0.92.2' # hugo 版本
+      # extended: true  # 如果是使用extended版本的務必取消註解。
+  - name: Build
+    run: hugo --gc --minify --cleanDestinationDir
+</code></pre><ul>
+<li>接下來這一步重要的地方,將前面步驟Hugo Build的靜態頁面發佈到Github Pages上面,一樣也使用官方的action操作</li>
+</ul>
+<pre tabindex=0><code>- name: Deploy
+  uses: peaceiris/actions-gh-pages@v3
+  with:
+    external_repository: username/username.github.io
+    deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} 設定推送的 Token，直接設為 ${{ secrets.GITHUB_TOKEN }} 就可以了，GITHUB_TOKEN 會由 actions 去處理。
+    PUBLISH_BRANCH: master  # 推送到 gh-pages 分支
+    PUBLISH_DIR: ./public     # hugo 生成的目錄
+    commit_message: ${{ github.event.head_commit.message }}
+    cname: josh-ku.com #設定 Github Pages Custom Domain 使用。
+    force_orphan: true #在目標分支，只保留最後一個提交，預設為 false。
+</code></pre><ul>
+<li>上步驟的deploy key於github頁面中添加,請到Settings/Secrets新增一組 Secrets，我這邊叫做 ACTIONS_DEPLOY_KEY
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/secret.png alt></li>
+<li>提供完整的workflow設定檔</li>
+</ul>
+<pre tabindex=0><code>name: deploy-to-github
+
+on:
+  push:
+    branches:
+      - master  # 當main分支有push操作時
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true  # 找尋Hugo主題(true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.92.2' # hugo 版本
+          # extended: true  # 如果是使用extended版本的務必取消註解。
+      - name: Build
+        run: hugo --gc --minify --cleanDestinationDir
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: username/username.github.io
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} #設定推送的 Token，直接設為 ${{ secrets.GITHUB_TOKEN }} 就可以了，GITHUB_TOKEN 會由 actions 去處理。
+          PUBLISH_BRANCH: master  # 推送到 gh-pages 分支
+          PUBLISH_DIR: ./public     # hugo 生成的目錄
+          commit_message: ${{ github.event.head_commit.message }}
+          cname: josh-ku.com
+          force_orphan: true #在目標分支，只保留最後一個提交，預設為 false。
+
+</code></pre><ol start=4>
+<li>開始部署</li>
+</ol>
+<ul>
+<li>此時執行推版就大功告成了!,靜態頁面會自動發佈到username.github.io專案中
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/github2.png alt></li>
+</ul>
+<ol start=5>
+<li>綁定網域(以cloudflare為例)</li>
+</ol>
+<ul>
+<li>將你購買的網域在cloudflare上面設定
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/cloudflare.png alt></li>
+<li>設定 CloudFlare DNS (網域名稱伺服器)
+你會看到 CloudFlare 要你去 GoDaddy 帳戶變更名稱伺服器，目的是將 GoDaddy 的 Domain name (你剛才購買的網域) 指定連結到 CloudFlare ，下方紅色框框處 (名稱伺服器) 要填在 GoDaddy 的「網域名稱伺服器中。」
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/dns.png alt></li>
+</ul>
+<ol start=6>
+<li>在 Github 建立 CNAME
+在該 Repository 下點擊「Setting」(我的話就是 joshku01.github.io)，往下拉直到看到「Github Pages」區塊，在 Custom domain 填上自己的網域名稱。(我就會填上 josh-ku.com)
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/cname.png alt>
+如果成功建立，此時回到 {username}.github.io > Code ，會發現多出了一個名為「CNAME」檔案。
+<img src=https://s3-qaz.s3.ap-northeast-1.amazonaws.com/cname2.png alt></li>
+</ol>
+<h3 id=結語>結語</h3>
+<p>利用 Github Actions 將以往要手動打git指令的動作改為自動，雖然節省的時間不多，但可以減少手動執行時出錯的機會，畢竟只要是人都會有出錯的時候，也讓自己可以專注於寫作上面，希望大家都可以很順利的建立出自己的網站，如果有任何建構上的問題也可以在下方留言詢問喔，前提是我要有看到。</p>
+<h4 id=參考資料>參考資料</h4>
+<blockquote>
+<p><a href=https://docs.github.com/en/actions>https://docs.github.com/en/actions</a>
+<a href=https://docs.github.com/zh/actions/quickstart>https://docs.github.com/zh/actions/quickstart</a></p>
+</blockquote>
+</div>
+</div>
+<div id=post-footer class="post-footer main-content-wrap">
+<div class=post-footer-tags>
+<span class="text-color-light text-small">標籤</span><br>
+<a class="tag tag--primary tag--small" href=https://josh-ku.com/tags/golang/>golang</a>
+<a class="tag tag--primary tag--small" href=https://josh-ku.com/tags/hugo/>hugo</a>
+</div>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--disabled">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/hugo-install/ data-tooltip="Hugo架設靜態網站教學 - 基本安裝及設定(一)" aria-label="上一篇: Hugo架設靜態網站教學 - 基本安裝及設定(一)">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+<div id=disqus_thread>
+<noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+</div>
+<script type=text/javascript>var disqus_config=function(){this.page.url='https://josh-ku.com/post/hugo-install-p2/',this.page.identifier='/post/hugo-install-p2/'};(function(){var a,b;if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='josh-ku',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
+</div>
+</article>
+<footer id=footer class=main-content-wrap>
+<span class=copyrights>
+&copy; 2024 <a href=https://josh-ku.com>Josh Ku</a>. All Rights Reserved
+</span>
+</footer>
+</div>
+<div id=bottom-bar class=post-bottom-bar data-behavior=4>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--disabled">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/hugo-install/ data-tooltip="Hugo架設靜態網站教學 - 基本安裝及設定(一)" aria-label="上一篇: Hugo架設靜態網站教學 - 基本安裝及設定(一)">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/hugo-install-p2/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div id=share-options-bar class=share-options-bar data-behavior=4>
+<i id=btn-close-shareoptions class="fa fa-times"></i>
+<ul class=share-options>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fhugo-install-p2%2F" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i><span>分享到 Facebook</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fhugo-install-p2%2F" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i><span>分享到 Twitter</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fhugo-install-p2%2F" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i><span>分享到 Linkedin</span>
+</a>
+</li>
+</ul>
+</div>
+<div id=share-options-mask class=share-options-mask></div>
+</div>
+<div id=about>
+<div id=about-card>
+<div id=about-btn-close>
+<i class="fa fa-times"></i>
+</div>
+<img id=about-card-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+<h4 id=about-card-name>Josh Ku</h4>
+<div id=about-card-bio>Software Engineer.Work Out.lifestyle</div>
+<div id=about-card-job>
+<i class="fa fa-briefcase"></i>
+<br>
+Backend Developer
+</div>
+<div id=about-card-location>
+<i class="fa fa-map-marker-alt"></i>
+<br>
+Taiwan Taichung
+</div>
+</div>
+</div>
+<div id=cover style=background-image:url(https://i.imgur.com/cE4vszy.jpg)></div>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://josh-ku.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js></script>
+<script>$(document).ready(function(){hljs.configure({classPrefix:'',useBR:!1}),$('pre.code-highlight > code, pre > code').each(function(b,a){$(this).hasClass('codeblock')||$(this).addClass('codeblock'),hljs.highlightBlock(a)})})</script>
+</body>
+</html>

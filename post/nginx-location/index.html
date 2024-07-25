@@ -1,0 +1,485 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<script type=application/ld+json>{"@context":"http://schema.org","@type":"Website","@id":"https:\/\/josh-ku.com\/","author":{"@type":"Person","name":"Josh Ku","image":"https://i.imgur.com/920bDlI.jpeg"},"name":"Josh Ku life blog \u0026\u0026 sharing happiness","description":"紀錄一下在寫nginx location時的一些設定\u0026hellip;","url":"https:\/\/josh-ku.com\/post\/nginx-location\/","keywords":"[tech]"}</script>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=generator content="Hugo 0.92.2 with theme Tranquilpeak 0.5.3-BETA">
+<meta name=author content="Josh Ku">
+<meta name=keywords content="tech">
+<meta name=description content="紀錄一下在寫nginx location時的一些設定&mldr;">
+<meta property="og:description" content="紀錄一下在寫nginx location時的一些設定&mldr;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx location設定">
+<meta name=twitter:title content="nginx location設定">
+<meta property="og:url" content="https://josh-ku.com/post/nginx-location/">
+<meta property="twitter:url" content="https://josh-ku.com/post/nginx-location/">
+<meta property="og:site_name" content="Josh Ku life blog && sharing happiness">
+<meta property="og:description" content="紀錄一下在寫nginx location時的一些設定&mldr;">
+<meta name=twitter:description content="紀錄一下在寫nginx location時的一些設定&mldr;">
+<meta property="og:locale" content="zh-tw">
+<meta property="article:published_time" content="2022-02-21T15:19:22">
+<meta property="article:modified_time" content="2022-02-21T15:19:22">
+<meta property="article:section" content="nginx">
+<meta property="article:tag" content="nginx">
+<meta name=twitter:card content="summary">
+<meta property="og:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="twitter:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="og:image" content="https://i.imgur.com/p2RAr7l.png">
+<meta property="twitter:image" content="https://i.imgur.com/p2RAr7l.png">
+<title>nginx location設定</title>
+<link rel=icon href=https://josh-ku.com/favicon.png>
+<link rel=canonical href=https://josh-ku.com/post/nginx-location/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://josh-ku.com/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1C7P3SSW1N"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-1C7P3SSW1N',{anonymize_ip:!1})}</script>
+</head>
+<body>
+<div id=blog>
+<header id=header data-behavior=4>
+<i id=btn-open-sidebar class="fa fa-lg fa-bars"></i>
+<div class=header-title>
+<a class=header-title-link href=https://josh-ku.com/ aria-label=去首頁>Josh Ku life blog && sharing happiness</a>
+</div>
+<a class="header-right-icon open-algolia-search" href=https://josh-ku.com/#search aria-label="打開鏈接: /#search">
+<i class="fa fa-lg fa-saarch"></i>
+</a>
+</header>
+<nav id=sidebar data-behavior=4>
+<div class=sidebar-container>
+<div class=sidebar-profile>
+<a href=https://josh-ku.com/#about aria-label=閱讀有關作者的更多信息>
+<img class=sidebar-profile-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+</a>
+<h4 class=sidebar-profile-name>Josh Ku</h4>
+<h5 class=sidebar-profile-bio>Software Engineer.Work Out.lifestyle</h5>
+</div>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title=Home>
+<i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden=true></i>
+<span class=sidebar-button-desc>首頁</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/categories title=Categories>
+<i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden=true></i>
+<span class=sidebar-button-desc>分類</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags title=Tags>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>標籤</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/archives title=Archives>
+<i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden=true></i>
+<span class=sidebar-button-desc>所有文章</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/about title=About>
+<i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden=true></i>
+<span class=sidebar-button-desc>關於</span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://github.com/joshku01 target=_blank rel=noopener title=GitHub>
+<i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden=true></i>
+<span class=sidebar-button-desc>GitHub</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/golang title=Golang>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Golang</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/docker title=Docker>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Docker</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/kubernetes title=Kubernetes>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Kubernetes</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<div id=main data-behavior=4 class=hasCoverMetaIn>
+<article class=post id=top>
+<div class="post-header main-content-wrap text-center">
+<h1 class=post-title>
+nginx location設定
+</h1>
+<div class="postShorten-meta post-meta">
+<time datetime=2022-02-21T15:19:22+08:00>
+21 二月 2022
+</time>
+<span>分類</span>
+<a class=category-link href=https://josh-ku.com/categories/nginx>nginx</a>
+</div>
+</div>
+<div class="post-content markdown">
+<div class=main-content-wrap>
+<h6 id=tags-web>tags: <code>web</code></h6>
+<h2 id=nginx-設定-location匹配選擇機制>Nginx 設定 location匹配選擇機制</h2>
+<h3 id=以下列配置為基準>以下列配置為基準:</h3>
+<ul>
+<li>一般配置(最長路徑),會搜尋全部location後才挑選出符合最長路徑的配置檔</li>
+</ul>
+<pre tabindex=0><code>server {
+    ...
+    server_name  www.domain.com 
+    ...
+
+    # 最基本的配置，會匹配到所有 http://www.domain.com 的請求，但是優先順序會被排到正規表示法和最長路徑之後
+    # 例如 http://www.domain.com/abc 或 http://www.domain.com/xyz/test 兩者皆可符合該規則 
+    location / {
+        ....
+    }
+
+    # 匹配到以 /rotate 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /rotate {
+        ....
+    }
+
+    # 匹配到以 /rotate/taiwan 開頭的所有請求，也是不會馬上採用，但若是有來自 http://www.domain.com/rotate/taiwan/... 開頭的請求，則會取代上面 /rotate 配置成為優先保留項再繼續往下搜尋
+    location /rotate/taiwan {
+        ....
+    }
+
+    # 匹配到以 /rotate/taiwan/keelung 開頭的所有請求，也是不會馬上採用，分為以下兩個情境
+    # 1. 來自 http://www.domain.com/rotate/taiwan/hsinchu 開頭的請求，依然會採用上面 /rotate/taiwan 的配置然後繼續往下搜尋
+    # 2. 來自 http://www.domain.com/rotate/taiwan/keelung 開頭的請求，則會取代上面 /rotate/taiwan 的配置成為新的優先保留項然後才再繼續往下搜尋
+    location /rotate/taiwan/keelung {
+        ....
+    }
+}
+</code></pre><ul>
+<li>使用<code>=</code>代表精準匹配,需要<code>完全符合</code>且匹配到會<code>立即採用</code></li>
+</ul>
+<pre tabindex=0><code>server {
+    ... other ...
+
+    server_name  www.domain.com 
+
+    ... other ...
+
+    # 只能 http://www.domain.com 才能符合，後面不能帶任何字元，e.g. http://www.domain.com (O), http://www.domain.com/abc (X)
+    location = / {
+        ....
+    }
+
+    # 來自 http://www.domain.com/news/taiwan/taipei 的要求會立即採用此配置
+    location = /news/taiwan/taipei {
+        ....
+    } 
+}
+</code></pre><ul>
+<li>使用<code>~</code>代表使用<code>正規表達式</code>來匹配,會區分大小寫</li>
+</ul>
+<ol>
+<li>若不區分大小寫使用<code>~*</code></li>
+<li>第一個匹配到的規則會<code>立即採用</code></li>
+<li><code>順序</code>很重要</li>
+</ol>
+<pre tabindex=0><code>server {
+    ... other ...
+
+    server_name  www.domain.com 
+
+    ... other ...
+
+    # 1. 來自 http://www.domain.com/images 開頭的要求會匹配此規則且立即採用該配置，但 http://www.domain.com/Images 開頭的要求則不符合該規則
+    location ~ ^/images {
+        ....
+    }
+
+    # 來自 http://www.domain.com/images 和 http://www.domain.com/Images 開頭的要求皆能符合此規則且會立即採用該配置
+    location ~* ^/images {
+        ....
+    }
+
+    # 匹配所有以 .gif 和 .jpg 和 .jpeg 結尾的要求，這邊分兩個情境來說明
+    # 1. 來自 http://www.domain.com/Images/dog.jpg 的請求雖然符合該配置的規則，但是卻會先被上面的 ~* ^/images 這條規則先攔截，因此該請求其實是到不了這條規則的
+    # 2. 來自 http://www.domain.com/news/images/cat.gif 的請求符合該配置的規則且沒在其它地方被攔截，所以會立即採用該配置
+    location ~* \.(gif|jpg|jpeg)$ {
+        ....
+    }
+
+    # 匹配所有 URI 路徑以 admin 和 swagger 和 api 開頭的要求，這邊分兩個情境來說明
+    # 例如來自 http://www.domain.com/admin/... 或 http://www.domain.com/Admin/... 開頭的請求皆符合此規則且會立即採用該配置
+    location ~* ^/(admin|swagger|api)/? {
+        ....
+    }  
+}
+</code></pre><ul>
+<li>使用 <code>^~</code>代表排除<code>正規表達式</code>的匹配,類似一般配置,<code>不同</code>的式一旦符合即<code>馬上採用該配置</code></li>
+</ul>
+<pre tabindex=0><code>server {
+    ...
+    server_name  www.domain.com 
+
+
+    # 匹配到所有請求，但還不會馬上採用，會繼續往下搜尋是否有其它較長符合路徑的項目
+    location / {
+        ....
+    }
+
+    # 匹配到以 /news 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /news {
+        ....
+    }
+
+    # 匹配到以 /news/taiwan 開頭的所有請求，因為使用了 ^~ 所以如果有符合 /news/taiwan 開頭的 URI 會立即採用該配置，停止往下搜尋
+    # 1. 來自 http://www.domain.com/news/taiwan/taichung/index 的請求符合該配置的規則，所以採用該配置
+    # 2. 來自 http://www.domain.com/news/china/xingchang/index 的請求不符合該配置的規則，繼續往下搜尋
+    location ^~ /news/taiwan {
+        ....
+    }
+
+    # 匹配到以 /news/china 開頭的所有請求，但還不會馬上採用，會繼續往下搜尋是否有較長符合路徑的項目
+    location /news/china {
+        ....
+    }
+}
+</code></pre><table>
+<thead>
+<tr>
+<th>參數</th>
+<th>說明</th>
+<th>是否立即採用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>最長路徑</td>
+<td>No</td>
+</tr>
+<tr>
+<td>=</td>
+<td>精準匹配</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>^~</td>
+<td>效果似最長路徑(略過正規表達式),但會馬上採取</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>~</td>
+<td>正規表達式,區分大小寫</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>~*</td>
+<td>正規表達式,不區分大小寫</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id=post-footer class="post-footer main-content-wrap">
+<div class=post-footer-tags>
+<span class="text-color-light text-small">標籤</span><br>
+<a class="tag tag--primary tag--small" href=https://josh-ku.com/tags/nginx/>nginx</a>
+</div>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/linux-shell/ data-tooltip="Linux 調整shell 方式" aria-label="下一篇: Linux 調整shell 方式">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--disabled">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/nginx-location/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/nginx-location/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/nginx-location/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+<div id=disqus_thread>
+<noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+</div>
+<script type=text/javascript>var disqus_config=function(){this.page.url='https://josh-ku.com/post/nginx-location/',this.page.identifier='/post/nginx-location/'};(function(){var a,b;if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='josh-ku',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
+</div>
+</article>
+<footer id=footer class=main-content-wrap>
+<span class=copyrights>
+&copy; 2024 <a href=https://josh-ku.com>Josh Ku</a>. All Rights Reserved
+</span>
+</footer>
+</div>
+<div id=bottom-bar class=post-bottom-bar data-behavior=4>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/linux-shell/ data-tooltip="Linux 調整shell 方式" aria-label="下一篇: Linux 調整shell 方式">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--disabled">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/nginx-location/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/nginx-location/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/nginx-location/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div id=share-options-bar class=share-options-bar data-behavior=4>
+<i id=btn-close-shareoptions class="fa fa-times"></i>
+<ul class=share-options>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fnginx-location%2F" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i><span>分享到 Facebook</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fnginx-location%2F" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i><span>分享到 Twitter</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fnginx-location%2F" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i><span>分享到 Linkedin</span>
+</a>
+</li>
+</ul>
+</div>
+<div id=share-options-mask class=share-options-mask></div>
+</div>
+<div id=about>
+<div id=about-card>
+<div id=about-btn-close>
+<i class="fa fa-times"></i>
+</div>
+<img id=about-card-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+<h4 id=about-card-name>Josh Ku</h4>
+<div id=about-card-bio>Software Engineer.Work Out.lifestyle</div>
+<div id=about-card-job>
+<i class="fa fa-briefcase"></i>
+<br>
+Backend Developer
+</div>
+<div id=about-card-location>
+<i class="fa fa-map-marker-alt"></i>
+<br>
+Taiwan Taichung
+</div>
+</div>
+</div>
+<div id=cover style=background-image:url(https://i.imgur.com/cE4vszy.jpg)></div>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://josh-ku.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js></script>
+<script>$(document).ready(function(){hljs.configure({classPrefix:'',useBR:!1}),$('pre.code-highlight > code, pre > code').each(function(b,a){$(this).hasClass('codeblock')||$(this).addClass('codeblock'),hljs.highlightBlock(a)})})</script>
+</body>
+</html>

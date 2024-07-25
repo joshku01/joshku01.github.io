@@ -1,0 +1,498 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<script type=application/ld+json>{"@context":"http://schema.org","@type":"Website","@id":"https:\/\/josh-ku.com\/","author":{"@type":"Person","name":"Josh Ku","image":"https://i.imgur.com/920bDlI.jpeg"},"name":"Josh Ku life blog \u0026\u0026 sharing happiness","description":"最近開始學習寫文章,剛好在整理一些先前寫過的技術文章,剛好也看到官方dockerfile的最佳實踐,那就一起整理起來順便充當翻譯及增加自己的想法","url":"https:\/\/josh-ku.com\/post\/best-practrices\/","keywords":"[tech, docker]"}</script>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=generator content="Hugo 0.92.2 with theme Tranquilpeak 0.5.3-BETA">
+<meta name=author content="Josh Ku">
+<meta name=keywords content="tech,docker">
+<meta name=description content="最近開始學習寫文章,剛好在整理一些先前寫過的技術文章,剛好也看到官方dockerfile的最佳實踐,那就一起整理起來順便充當翻譯及增加自己的想法">
+<meta property="og:description" content="最近開始學習寫文章,剛好在整理一些先前寫過的技術文章,剛好也看到官方dockerfile的最佳實踐,那就一起整理起來順便充當翻譯及增加自己的想法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dockerfile的最佳實踐">
+<meta name=twitter:title content="Dockerfile的最佳實踐">
+<meta property="og:url" content="https://josh-ku.com/post/best-practrices/">
+<meta property="twitter:url" content="https://josh-ku.com/post/best-practrices/">
+<meta property="og:site_name" content="Josh Ku life blog && sharing happiness">
+<meta property="og:description" content="最近開始學習寫文章,剛好在整理一些先前寫過的技術文章,剛好也看到官方dockerfile的最佳實踐,那就一起整理起來順便充當翻譯及增加自己的想法">
+<meta name=twitter:description content="最近開始學習寫文章,剛好在整理一些先前寫過的技術文章,剛好也看到官方dockerfile的最佳實踐,那就一起整理起來順便充當翻譯及增加自己的想法">
+<meta property="og:locale" content="zh-tw">
+<meta property="article:published_time" content="2023-02-16T15:36:53">
+<meta property="article:modified_time" content="2023-02-16T15:36:53">
+<meta property="article:section" content="docker">
+<meta property="article:section" content="devops">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="devops">
+<meta name=twitter:card content="summary">
+<meta property="og:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="twitter:image" content="https://i.imgur.com/920bDlI.jpeg">
+<meta property="og:image" content="https://i.imgur.com/QJgEGJD.png">
+<meta property="twitter:image" content="https://i.imgur.com/QJgEGJD.png">
+<title>Dockerfile的最佳實踐</title>
+<link rel=icon href=https://josh-ku.com/favicon.png>
+<link rel=canonical href=https://josh-ku.com/post/best-practrices/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin=anonymous referrerpolicy=no-referrer>
+<link rel=stylesheet href=https://josh-ku.com/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1C7P3SSW1N"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-1C7P3SSW1N',{anonymize_ip:!1})}</script>
+</head>
+<body>
+<div id=blog>
+<header id=header data-behavior=4>
+<i id=btn-open-sidebar class="fa fa-lg fa-bars"></i>
+<div class=header-title>
+<a class=header-title-link href=https://josh-ku.com/ aria-label=去首頁>Josh Ku life blog && sharing happiness</a>
+</div>
+<a class="header-right-icon open-algolia-search" href=https://josh-ku.com/#search aria-label="打開鏈接: /#search">
+<i class="fa fa-lg fa-saarch"></i>
+</a>
+</header>
+<nav id=sidebar data-behavior=4>
+<div class=sidebar-container>
+<div class=sidebar-profile>
+<a href=https://josh-ku.com/#about aria-label=閱讀有關作者的更多信息>
+<img class=sidebar-profile-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+</a>
+<h4 class=sidebar-profile-name>Josh Ku</h4>
+<h5 class=sidebar-profile-bio>Software Engineer.Work Out.lifestyle</h5>
+</div>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title=Home>
+<i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden=true></i>
+<span class=sidebar-button-desc>首頁</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/categories title=Categories>
+<i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden=true></i>
+<span class=sidebar-button-desc>分類</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags title=Tags>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>標籤</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/archives title=Archives>
+<i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden=true></i>
+<span class=sidebar-button-desc>所有文章</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/about title=About>
+<i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden=true></i>
+<span class=sidebar-button-desc>關於</span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://github.com/joshku01 target=_blank rel=noopener title=GitHub>
+<i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden=true></i>
+<span class=sidebar-button-desc>GitHub</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/golang title=Golang>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Golang</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/docker title=Docker>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Docker</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/tags/kubernetes title=Kubernetes>
+<i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden=true></i>
+<span class=sidebar-button-desc>Kubernetes</span>
+</a>
+</li>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+<ul class=sidebar-buttons>
+<li class=sidebar-button>
+<a class=sidebar-button-link href=https://josh-ku.com/ title>
+<span class=sidebar-button-desc></span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<div id=main data-behavior=4 class=hasCoverMetaIn>
+<article class=post id=top>
+<div class="post-header main-content-wrap text-center">
+<h1 class=post-title>
+Dockerfile的最佳實踐
+</h1>
+<div class="postShorten-meta post-meta">
+<time datetime=2023-02-16T15:36:53+08:00>
+16 二月 2023
+</time>
+<span>分類</span>
+<a class=category-link href=https://josh-ku.com/categories/docker>docker</a>,
+<a class=category-link href=https://josh-ku.com/categories/devops>devops</a>
+</div>
+</div>
+<div class="post-content markdown">
+<div class=main-content-wrap>
+<h2 id=1-create-ephemeral-containers容器是短暫的>1. Create ephemeral containers(容器是短暫的)</h2>
+<h4 id=透過dockerfile建構的鏡像應該盡可能是短暫的短暫意味著可以很快速的啟動和銷毀>透過<code>Dockerfile</code>建構的鏡像應該盡可能是短暫的,短暫意味著可以很快速的啟動和銷毀</h4>
+<h2 id=2-understand-build-context了解建構上下文>2. Understand build context(了解建構上下文)</h2>
+<h4 id=避免使用path為做為建構的上下文它會導致建構將硬碟全部內容傳輸到守護進程>避免使用Path為<code>/</code>做為建構的上下文,它會導致建構將硬碟全部內容傳輸到守護進程</h4>
+<ul>
+<li>建構時注意context的目錄,通常為<code>.</code>當前的位置,以下範例:
+<code>docker build .</code></li>
+<li>善用<code>.gitignore</code>來排除某些文件,如:</li>
+</ul>
+<pre tabindex=0><code># .dockerignore
+node_modules
+bar
+</code></pre><h2 id=3-pipe-dockerfile-through-stdin借stdin管道傳輸dockerfile>3. Pipe Dockerfile through stdin(借stdin管道傳輸Dockerfile)</h2>
+<h4 id=你如果鏡像只是暫時的一次性建構且又懶的寫dockerfile可以由以下寫法表示>你如果鏡像只是暫時的一次性建構,且又懶的寫Dockerfile,可以由以下寫法表示:</h4>
+<pre tabindex=0><code>echo -e 'FROM busybox\nRUN echo &quot;hello world&quot;' | docker build -
+</code></pre><pre tabindex=0><code>docker build -&lt;&lt;EOF
+FROM busybox
+RUN echo &quot;hello world&quot;
+EOF
+</code></pre><h2 id=4-use-multi-stage-builds使用多階段式的建構>4. Use multi-stage builds(使用多階段式的建構)</h2>
+<h5 id=使用多階段建構可以大幅減少最終鏡像的大小簡單說就是只要在乎最終鏡像的大小而中間階段的階段就不用考慮優話>使用多階段建構可以大幅減少最終鏡像的大小,簡單說就是只要在乎最終鏡像的大小,而中間階段的階段就不用考慮優話。</h5>
+<h5 id=以下使用熟須的golang做為例子建構過程中我們需要將golang主程式編譯成二進位文件接著再把編譯後的文件丟到一個極度輕量的alpine容器內這樣就可以確保最終的鏡像是非常輕量化的>以下使用熟須的golang做為例子,建構過程中,我們需要將golang主程式編譯成二進位文件,接著再把編譯後的文件丟到一個極度輕量的alpine容器內,這樣就可以確保最終的鏡像是非常輕量化的。</h5>
+<pre tabindex=0><code># build stage
+FROM golang:1.18.0-alpine AS build
+RUN apk add git
+# 複製原始碼
+COPY . /go/src/project
+WORKDIR /go/src/project
+# 進行編譯(名稱為：runner)
+RUN go build -o runner
+
+# final stage
+# 運行golang 的基底
+FROM alpine:3.17
+# 使用alpine容器 複製第一階段映像檔
+COPY --from=build /go/src/project/runner /app/runner
+COPY ./config /app/config
+# 設定容器時區(亞洲/台北)
+RUN apk update 
+# 工作目錄
+WORKDIR /app
+# 執行編譯檔案
+ENTRYPOINT [ &quot;./runner&quot; ]
+</code></pre><h2 id=5-dont-install-unnecessary-packages不要安裝不必的包>5. Don’t install unnecessary packages(不要安裝不必的包)</h2>
+<h4 id=為了降低複雜性減少依賴性減少文件大小並縮短建構時間在非必要情況應避免>為了降低複雜性，減少依賴性，減少文件大小並縮短建構時間,在非必要情況應避免</h4>
+<h2 id=6-minimize-the-number-of-layers鏡像層數減少>6. Minimize the number of layers(鏡像層數減少)</h2>
+<h4 id=在舊版docker中盡量減少鏡像中的層數以確保他們的性能>在舊版Docker中,盡量減少鏡像中的層數,以確保他們的性能</h4>
+<ul>
+<li>只有<code>RUN</code>,<code>COPY</code>,<code>ADD</code>創見層,其他指令創建臨時中間鏡像,並不會增加建構的大小</li>
+<li>在可能的情況下，使用多階段建構，可以參考上方<code>使用多階段建構</code></li>
+</ul>
+<h2 id=7-sort-multi-line-arguments將多行參數進行排序>7. Sort multi-line arguments(將多行參數進行排序)</h2>
+<h4 id=將多行參數按照字母排序有助於避免重複安裝到同一個包更新列表包時也更容易維護以下範例使用反斜槓也更有幫助>將多行參數按照字母排序,有助於避免重複安裝到同一個包,更新列表包時也更容易維護,以下範例使用反斜槓<code>\</code>也更有幫助</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>RUN</span> apt-get update <span style=color:#f92672>&amp;&amp;</span> apt-get install -y <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  bzr <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  cvs <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  git <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  mercurial <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  subversion <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  <span style=color:#f92672>&amp;&amp;</span> rm -rf /var/lib/apt/lists/*<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h2 id=8-leverage-build-cache利用建構緩存>8. Leverage build cache(利用建構緩存)</h2>
+<h4 id=建構鏡像時docker會逐步執行dockerfile中的指令並按照順序執行在每條指令執行前docker都會在緩存中查找有是否有存在可以重用的鏡像不重複創建>建構鏡像時,Docker會逐步執行Dockerfile中的指令,並按照順序執行,在每條指令執行前,Docker都會在緩存中查找有是否有存在可以重用的鏡像,不重複創建</h4>
+<h4 id=可以在docker-build-命令中使用---no-cachetrue選項來禁用緩存><code>可以在docker build 命令中使用 --no-cache=true選項來禁用緩存</code></h4>
+<ul>
+<li>從緩存中已有的父鏡像開始，將下一條指令與該父鏡像的所有子鏡像進行比較，檢查這子鏡像，在被創建時的指令是否和被檢查的指令完全一樣。如果不是，則緩存無效。</li>
+<li>在大多數的情況下，只需要簡單的比對 Dockerfile 中的指令與子鏡像</li>
+</ul>
+<h4 id=一旦緩存失效所有後續的dockerfile命令都會生成新的並不會使用緩存>一旦緩存失效,所有後續的Dockerfile命令都會生成新的並不會使用緩存</h4>
+<h2 id=dockerfile寫法指引>Dockerfile寫法指引</h2>
+<h3 id=from>FROM</h3>
+<h4 id=盡可能使用官方當前的鏡像docker推薦-alpine鏡像因為它受嚴格控制且體積小不到6mb完整性也足夠>盡可能使用官方當前的鏡像,Docker推薦 Alpine鏡像,因為它受嚴格控制且體積小(不到6MB),完整性也足夠</h4>
+<h3 id=label>LABEL</h3>
+<h4 id=label的用處就好比我們在寫readmemd文件中寫how-to意思一樣有助於開發者更能知道鏡像本身的資訊使我們的鏡像更透明>LABEL的用處就好比我們在寫README.md文件中寫How-TO意思一樣,有助於開發者更能知道鏡像本身的資訊,使我們的鏡像更透明</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#75715e># 以下為LABEL範例</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Set one or more individual labels</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> com.example.version<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0.0.1-beta&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> vendor1<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ACME Incorporated&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> vendor2<span style=color:#f92672>=</span>ZENITH<span style=color:#ae81ff>\ </span>Incorporated<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> com.example.release-date<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;2015-02-12&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> com.example.version.is-production<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#75715e># 以下用法也是可以被接受的</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Set multiple labels on one line</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> com.example.version<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0.0.1-beta&#34;</span> com.example.release-date<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;2015-02-12&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Set multiple labels at once, using line-continuation characters to break long lines</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>LABEL</span> vendor<span style=color:#f92672>=</span>ACME<span style=color:#ae81ff>\ </span>Incorporated <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      com.example.is-beta<span style=color:#f92672>=</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      com.example.is-production<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      com.example.version<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0.0.1-beta&#34;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      com.example.release-date<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;2015-02-12&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h3 id=run>RUN</h3>
+<h4 id=使用--可以提昇dockerfile可讀性可維護性>使用 <code>\</code> 可以提昇Dockerfile可讀性,可維護性</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>RUN</span> /bin/bash -c <span style=color:#e6db74>&#39;source $HOME/.bashrc &amp;&amp; \
+</span><span style=color:#e6db74>echo $HOME&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=apt-get>apt-get</h4>
+<h4 id=使用apt-get的時候要注意永遠使用run-apt-get-udpate-而不是單一使用apt-get-update>使用apt-get的時候要注意,永遠使用<code>RUN apt-get udpate</code> 而不是單一使用<del>apt-get update</del></h4>
+<h4 id=使用run的時候注意以下錯誤以下結果將會導致apt-get-update沒有被執行因為建構使用了緩存的版本>使用RUN的時候注意以下錯誤,以下結果將會導致apt-get update沒有被執行,因為建構使用了緩存的版本</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#75715e># syntax=docker/dockerfile:1</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> ubuntu:18.04</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apt-get update<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apt-get install -y curl<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=你需要只用-run-apt-get-update--apt-get-install--y來確保dockerfile安裝最新的安裝包這技術稱為緩存破壞也可以透過指定的包版本來實現緩存清除如>你需要只用<code> RUN apt-get update && apt-get install -y</code>來確保Dockerfile安裝最新的安裝包,這技術稱為緩存破壞,也可以透過指定的包版本來實現緩存清除,如:</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>RUN</span> apt-get update <span style=color:#f92672>&amp;&amp;</span> apt-get install -y <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    aufs-tools <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    automake <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    build-essential <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    curl <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    dpkg-sig <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    libcap-dev <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    libsqlite3-dev <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    mercurial <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    reprepro <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    ruby1.9.1 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    ruby1.9.1-dev <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    s3cmd<span style=color:#f92672>=</span>1.1.* <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span> <span style=color:#f92672>&amp;&amp;</span> rm -rf /var/lib/apt/lists/*<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h3 id=cmd>CMD</h3>
+<h4 id=cmd的結構永遠都是cmd-executable-param1-param2>CMD的結構永遠都是<code>CMD ["executable", "param1", "param2"…]</code></h4>
+<h3 id=詳細查看-dockerfile-reference-for-the-cmd-instructionhttpsdocsdockercomenginereferencebuildercmd>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#cmd>Dockerfile reference for the CMD instruction</a></h3>
+<h3 id=expose>EXPOSE</h3>
+<h4 id=expose指令指示容器監聽的端口例如apache-web服務器監聽端口使用-expose-80>EXPOSE指令指示容器監聽的端口,例如Apache Web服務器監聽端口使用 EXPOSE 80</h4>
+<h4 id=詳細查看-dockerfile-reference-for-the-expose-instructionhttpsdocsdockercomenginereferencebuilderexpose>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#expose>Dockerfile reference for the EXPOSE instruction</a></h4>
+<h3 id=env>ENV</h3>
+<h4 id=添加服務的環境變數可以使用env替容器安裝程序更新path環境變數例如設置>添加服務的環境變數,可以使用ENV替容器安裝程序更新PATH環境變數,例如設置:</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>ENV</span> PATH<span style=color:#f92672>=</span>/usr/local/nginx/bin:$PATH<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>#來確保可以正確執行</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>CMD</span> [<span style=color:#e6db74>&#34;nginx&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=詳細查看-dockerfile-reference-for-the-env-instructionhttpsdocsdockercomenginereferencebuilderenv>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#env>Dockerfile reference for the ENV instruction</a></h4>
+<h3 id=add-or-copy>ADD or COPY</h3>
+<h4 id=雖然說addcopy在功能上非常相似但copy還是首選因為比add更為透明copy只支持將本地文件複製到容器中一般來說最常使用add的情況為add-rootaatarxz>雖然說ADD,COPY在功能上非常相似,但COPY還是首選,因為比ADD更為透明,COPY只支持將本地文件複製到容器中,一般來說最常使用ADD的情況為<code>ADD rootaa.tar.xz</code></h4>
+<h4 id=應避免以下寫法>應避免以下寫法</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>ADD</span> https://example.com/big.tar.xz /usr/src/things/<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> tar -xJf /usr/src/things/big.tar.xz -C /usr/src/things<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> make -C /usr/src/things all<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=使用以下寫法>使用以下寫法</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>RUN</span> mkdir -p /usr/src/things <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    <span style=color:#f92672>&amp;&amp;</span> curl -SL https://example.com/big.tar.xz <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    | tar -xJC /usr/src/things <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    <span style=color:#f92672>&amp;&amp;</span> make -C /usr/src/things all<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h3 id=entrypoint>ENTRYPOINT</h3>
+<h4 id=使用entrypoint的最好方式為設置為主要命令然後將cmd作為預設參數選項>使用ENTRYPOINT的最好方式為設置為主要命令,然後將<code>CMD</code>作為預設參數選項:</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>ENTRYPOINT</span> [<span style=color:#e6db74>&#34;s3cmd&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>CMD</span> [<span style=color:#e6db74>&#34;--help&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=詳細查看-dockerfile-reference-for-the-entrypoint-instructionhttpsdocsdockercomenginereferencebuilderentrypoint>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#entrypoint>Dockerfile reference for the ENTRYPOINT instruction</a></h4>
+<h3 id=volume>VOLUME</h3>
+<h4 id=volume為需要容器掛載持久的儲存區為了解決容器間資料共享與資料保存用例如>VOLUME為需要容器掛載持久的儲存區,為了解決容器間資料共享與資料保存用,例如:</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#75715e># 為/myvol設置一個持久的儲存區</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> ubuntu</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> mkdir /myvol<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> echo <span style=color:#e6db74>&#34;hello world&#34;</span> &gt; /myvol/greeting<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>VOLUME</span><span style=color:#e6db74> /myvol</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># 將myvolume:/data nginx /bin/sh</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>docker run -it -v myvolume:/data nginx /bin/bash<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=詳細查看-dockerfile-reference-for-the-volume-instructionhttpsdocsdockercomenginereferencebuildervolume>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#volume>Dockerfile reference for the VOLUME instruction</a></h4>
+<h3 id=user>USER</h3>
+<h4 id=使用範例>使用範例:</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>USER</span><span style=color:#e6db74> &lt;user&gt;[:&lt;group&gt;]</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># or</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>USER</span><span style=color:#e6db74> &lt;UID&gt;[:&lt;GID&gt;]</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p><code>注意:當有指定使用者群組時,其他任何未指定的群組成員都將會忽略,如果沒有指定群組,鏡像將會使用root群組</code></p>
+<h4 id=詳細查看-dockerfile-reference-for-the-user-instructionhttpsdocsdockercomenginereferencebuilderuser>詳細查看 <a href=https://docs.docker.com/engine/reference/builder/#user>Dockerfile reference for the USER instruction</a></h4>
+<h3 id=workdir>WORKDIR</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#66d9ef>WORKDIR</span><span style=color:#e6db74> /path/to/workdir</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><h4 id=workdir-指令為runcmdentrypointcopyadd指令設置工作目錄即使workdir不存在dockerfile也會自行創建默認工作目錄但避免在未知的目錄進行意外操作最好還是設置workdir>WORKDIR 指令為RUN,CMD,ENTRYPOINT,COPY,ADD指令設置工作目錄,即使WORKDIR不存在,Dockerfile也會自行創建默認工作目錄<code>/</code>,但避免在未知的目錄進行意外操作,最好還是設置WORKDIR</h4>
+<h3 id=參考>參考</h3>
+<h4 id=詳細查看-dockerfile-best-practiceshttpsdocsdockercomdevelopdevelop-imagesdockerfile_best-practices>詳細查看 <a href=https://docs.docker.com/develop/develop-images/dockerfile_best-practices/>Dockerfile Best Practices</a></h4>
+<h4 id=感謝大家閱讀初次寫技術類文章希望內容能盡量完整如發現內容有誤也歡迎底下留言給我另外覺得內容不錯的話順手給我一個讚吧你的讚將為技術寫手小白注入更多的成長動力感謝各位一起學習一起交流成為更好的自己>感謝大家閱讀,初次寫技術類文章希望內容能盡量完整,如發現內容有誤也歡迎底下留言給我,另外覺得內容不錯的話順手給我一個讚吧！你的讚將為技術寫手小白注入更多的成長動力,感謝各位,一起學習一起交流成為更好的自己。</h4>
+</div>
+</div>
+<div id=post-footer class="post-footer main-content-wrap">
+<div class=post-footer-tags>
+<span class="text-color-light text-small">標籤</span><br>
+<a class="tag tag--primary tag--small" href=https://josh-ku.com/tags/docker/>docker</a>
+<a class="tag tag--primary tag--small" href=https://josh-ku.com/tags/devops/>devops</a>
+</div>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/linux-netstat/ data-tooltip=好用的Linux必學指令-Netstat aria-label="下一篇: 好用的Linux必學指令-Netstat">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/go-stack-heap/ data-tooltip="Golang中的Stack && Heap 記憶體管理" aria-label="上一篇: Golang中的Stack && Heap 記憶體管理">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/best-practrices/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/best-practrices/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/best-practrices/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+<div id=disqus_thread>
+<noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+</div>
+<script type=text/javascript>var disqus_config=function(){this.page.url='https://josh-ku.com/post/best-practrices/',this.page.identifier='/post/best-practrices/'};(function(){var a,b;if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='josh-ku',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
+</div>
+</article>
+<footer id=footer class=main-content-wrap>
+<span class=copyrights>
+&copy; 2024 <a href=https://josh-ku.com>Josh Ku</a>. All Rights Reserved
+</span>
+</footer>
+</div>
+<div id=bottom-bar class=post-bottom-bar data-behavior=4>
+<div class=post-actions-wrap>
+<nav>
+<ul class="post-actions post-action-nav">
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/linux-netstat/ data-tooltip=好用的Linux必學指令-Netstat aria-label="下一篇: 好用的Linux必學指令-Netstat">
+<i class="fa fa-angle-left"></i>
+<span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default tooltip--top" href=https://josh-ku.com/post/go-stack-heap/ data-tooltip="Golang中的Stack && Heap 記憶體管理" aria-label="上一篇: Golang中的Stack && Heap 記憶體管理">
+<span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+<i class="fa fa-angle-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+<ul class="post-actions post-action-share">
+<li class="post-action hide-lg hide-md hide-sm">
+<a class="post-action-btn btn btn--default btn-open-shareoptions" href=#btn-open-shareoptions aria-label=分享這個帖子>
+<i class="fa fa-share-alt" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.facebook.com/sharer/sharer.php?u=https://josh-ku.com/post/best-practrices/" title="分享到 Facebook" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://twitter.com/intent/tweet?text=https://josh-ku.com/post/best-practrices/" title="分享到 Twitter" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i>
+</a>
+</li>
+<li class="post-action hide-xs">
+<a class="post-action-btn btn btn--default" target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https://josh-ku.com/post/best-practrices/" title="分享到 Linkedin" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#disqus_thread aria-label=發表評論>
+<i class="far fa-comment"></i>
+</a>
+</li>
+<li class=post-action>
+<a class="post-action-btn btn btn--default" href=#top aria-label=回到頂部>
+<i class="fa fa-arrow-up" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div id=share-options-bar class=share-options-bar data-behavior=4>
+<i id=btn-close-shareoptions class="fa fa-times"></i>
+<ul class=share-options>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fbest-practrices%2F" aria-label="分享到 Facebook">
+<i class="fab fa-facebook-square" aria-hidden=true></i><span>分享到 Facebook</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fbest-practrices%2F" aria-label="分享到 Twitter">
+<i class="fab fa-twitter" aria-hidden=true></i><span>分享到 Twitter</span>
+</a>
+</li>
+<li class=share-option>
+<a class=share-option-btn target=new href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjosh-ku.com%2Fpost%2Fbest-practrices%2F" aria-label="分享到 Linkedin">
+<i class="fab fa-linkedin" aria-hidden=true></i><span>分享到 Linkedin</span>
+</a>
+</li>
+</ul>
+</div>
+<div id=share-options-mask class=share-options-mask></div>
+</div>
+<div id=about>
+<div id=about-card>
+<div id=about-btn-close>
+<i class="fa fa-times"></i>
+</div>
+<img id=about-card-picture src=https://i.imgur.com/920bDlI.jpeg alt=作者的圖片>
+<h4 id=about-card-name>Josh Ku</h4>
+<div id=about-card-bio>Software Engineer.Work Out.lifestyle</div>
+<div id=about-card-job>
+<i class="fa fa-briefcase"></i>
+<br>
+Backend Developer
+</div>
+<div id=about-card-location>
+<i class="fa fa-map-marker-alt"></i>
+<br>
+Taiwan Taichung
+</div>
+</div>
+</div>
+<div id=cover style=background-image:url(https://i.imgur.com/cE4vszy.jpg)></div>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+<script src=https://josh-ku.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js></script>
+<script async crossorigin=anonymous defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js></script>
+<script>$(document).ready(function(){hljs.configure({classPrefix:'',useBR:!1}),$('pre.code-highlight > code, pre > code').each(function(b,a){$(this).hasClass('codeblock')||$(this).addClass('codeblock'),hljs.highlightBlock(a)})})</script>
+</body>
+</html>
